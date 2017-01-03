@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
-  get 'epicenter/feed'
 
-  get 'epicenter/show_user'
+  get 'show_user' => 'epicenter#show_user'
 
-  get 'epicenter/now_following'
+  get 'now_following' => 'epicenter#now_following'
 
-  get 'epicenter/unfollow'
+  get 'unfollow' => 'epicenter#unfollow'
 
-  root 'tweets#index'
+  root 'epicenter#feed'
 
   resources :tweets
   devise_for :users
