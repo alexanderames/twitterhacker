@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'jquery-turbolinks'
 gem 'devise'
 gem 'paperclip'
 gem 'bootstrap-sass', '~> 3.3.6'
