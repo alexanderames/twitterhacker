@@ -1,13 +1,16 @@
 class EpicenterController < ApplicationController
   def feed
-  	#initialize array that holds tweets from current_user follow list
+
+  	#empty array for holding all tweets
   	@following_tweets = []
 
-  	#iterate thru and find associated user tweets in array
-  	Tweet.all.each do |tweet|
-  		if current_user.following.include?(tweet.user_id)
-  			@following_tweets.push(tweet)
-  			#tweets pushed into array to power view
+  	#loop thru all the tweets and find the relevant ones
+  	# TODO: very inefficient query, look at better alternatives
+  	if user_signed_in?
+	  	Tweet.all.each do |tweet|
+	  		if current_user.following.include?(tweet.user_id)
+	  			@following_tweets.push(tweet)
+	  		end
   		end
   	end
   end
@@ -17,16 +20,15 @@ class EpicenterController < ApplicationController
   end
 
   def now_following
-  	#displaying purposes
-  	@user = User.find(params[:follow_id])
+    @user = User.find(params[:id])
 
-  	current_user.following.push(params[:follow_id].to_i)
-  	#adds user.id of User you want to follow to 'following' array attribute
-
-  	current_user.save
-  	#save to db
+    current_user.following.push(params[:id].to_i)
+    current_user.save
   end
 
   def unfollow
+    @user = User.find(params[:id])
+    current_user.following.delete(params[:id].to_i)
+    current_user.save
   end
 end
