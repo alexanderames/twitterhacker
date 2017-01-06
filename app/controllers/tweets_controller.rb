@@ -29,7 +29,7 @@ class TweetsController < ApplicationController
   def create
     @tweet = Tweet.new(tweet_params)
 
-    get_tagged(@tweet)
+    create_tags(@tweet)
 
     respond_to do |format|
       if @tweet.save
@@ -53,6 +53,7 @@ class TweetsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @tweet.errors, status: :unprocessable_entity }
       end
+    edit_tags(@tweet)
     end
   end
 
